@@ -84,15 +84,23 @@ public class ReclamationUtil {
 
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
+        event.getOriginal().revive();
         event.getOriginal().getCapability(GlobeCountCapability.GLOBE_COUNT).ifPresent(oldCap -> {
             event.getEntity().getCapability(GlobeCountCapability.GLOBE_COUNT).ifPresent(newCap -> {
                 newCap.getData().count = oldCap.getData().count;
             });
-
-            if (event.getOriginal() instanceof ServerPlayer serverPlayer) {
-                ReclamationPacketHandler.sendToPlayer(oldCap.getData().count, serverPlayer);
-            }
         });
+        event.getOriginal().setRemoved(event.isWasDeath() ? Entity.RemovalReason.KILLED : Entity.RemovalReason.CHANGED_DIMENSION);
+        event.getOriginal().invalidateCaps();
+    }
+
+    @SubscribeEvent
+    public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            player.getCapability(GlobeCountCapability.GLOBE_COUNT).ifPresent(cap -> {
+                ReclamationPacketHandler.sendToPlayer(cap.getData().count, player);
+            });
+        }
     }
 
     @SubscribeEvent
