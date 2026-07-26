@@ -2,9 +2,6 @@ package com.accbdd.reclamation_util.item;
 
 import com.blakebr0.cucumber.helper.NBTHelper;
 import com.blakebr0.cucumber.item.BaseWateringCanItem;
-import com.blakebr0.mysticalagriculture.lib.ModTooltips;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
@@ -13,15 +10,10 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.List;
 
 public class WateringCanItem extends BaseWateringCanItem {
     public WateringCanItem(int range, double chance) {
@@ -105,16 +97,5 @@ public class WateringCanItem extends BaseWateringCanItem {
             return InteractionResult.PASS;
 
         return super.useOn(context);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    @Override
-    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag advanced) {
-        super.appendHoverText(stack, level, tooltip, advanced);
-
-        var rangeString = String.valueOf(this.range);
-        var rangeNumber = Component.literal(rangeString + "x" + rangeString).withStyle(ChatFormatting.GRAY);
-
-        tooltip.add(ModTooltips.TOOL_AREA.args(rangeNumber).build());
     }
 }
