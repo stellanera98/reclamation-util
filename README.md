@@ -56,4 +56,5 @@ Utilities and mixins for the Reclamation modpack.
   * Stop Botania Petal Apothecary from laundering water
   * Bottles pick up whole source blocks 4 at a time
   * No ability to pick up water from flowing blocks
+  * Embers boiler ignores fluid purity
 * Removes bonemealing water to generate plants
