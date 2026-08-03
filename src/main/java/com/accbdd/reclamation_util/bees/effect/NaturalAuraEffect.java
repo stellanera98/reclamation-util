@@ -1,6 +1,9 @@
 package com.accbdd.reclamation_util.bees.effect;
 
+import com.accbdd.complicated_bees.bees.GeneticHelper;
 import com.accbdd.complicated_bees.bees.effect.BeeEffect;
+import com.accbdd.complicated_bees.bees.gene.GeneProductivity;
+import com.accbdd.complicated_bees.bees.gene.enums.EnumProductivity;
 import de.ellpeck.naturesaura.api.aura.chunk.IAuraChunk;
 import de.ellpeck.naturesaura.blocks.ModBlocks;
 import net.minecraft.core.BlockPos;
@@ -18,7 +21,8 @@ public class NaturalAuraEffect extends BeeEffect {
         if (apiary.getLevel() == null) return;
 
         if (cycleProgress == 0) {
-            int amount = 100000;
+            float prod = ((EnumProductivity) GeneticHelper.getGeneValue(queen, GeneProductivity.ID, true)).value;
+            int amount = (int) (100000f * prod);
             BlockPos blockPos = apiary.getBlockPos();
             Level level = apiary.getLevel();
             int aura = IAuraChunk.getAuraInArea(level, blockPos, 35);
